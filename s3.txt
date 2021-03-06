@@ -1,0 +1,459 @@
+23/11/2020
+S3- simple storage servie
+
+object storage file
+ http 
+
+
+https://join.slack.com/t/awswithavinash/shared_invite/zt-j6e1dsee-zYIONJVgfq3EqtQpYvDhRA
+https://github.com/avizway1/nov2020
+
+
+https://asdfgqwer.s3.ap-south-1.amazonaws.com/s3.txt
+
+
+54.208.182.16---------------------------------
+D: 17/11/2020
+
+S3: Simple Storage Service : AWS Version of GDrive..
+
+--> Block Based Storage : Designed to run the OS		: EBS, Instance Store
+--> Storage Over Network (SAN/NAS) 				: EFS, FSx
+--> Object Based Storage : Designed to store flat files		: S3
+
+S3:
+--> We can store any file.
+--> We cannot install / Run Operating SYstem / Application.
+
+--> We store all data in Buckets. 
+--> Bucket is a Directory/Folder, with Unique namespace across the globe.
+--> Defaultly, 100 is a softlimit for bucket count. 
+
+--> S3 Bucket Naming standards.. 
+	--> Min 3 Char, Max 63 Char
+	--> should not contains Uppercase letter
+	--> Should not start with . end with . no adjesent ..
+	--> Should not resemble IP address format.
+	--> Should not begin with xn--
+
+
+--> S3 is a Global resource. (From Single console we can see all region resources).
+--> WHile creating we need to choose the region, Actual data stores there.
+
+
+Free Tier : 
+5 GB Standard Storage
+2000 PUT (Upload)
+20,000 GET (Downloads)
+
+--> In S3, No Pre-Provisioning required.
+--> Pay-as-you-go.
+--> We can store Unlimited Data in S3 platform.
+
+--> In AWS, Based on access patterns, we can choose the approprite Storage class. 
+
+
+Access Pattern : How freq data is accessed. 
+
+		GDrive		AWS S3
+
+100 gb		90 gb		
+
+Freq		10 gb		Standard
+InFreq		20 gb		Standard-IA / OneZone-IA
+Archieve	50 gb		Glacier / Glacier Deep Archieve
+Don't know	10 gb		Intelliget Tier
+
+
+S3-Standard : Frequetly accessed data..  Data Spread across >=3 AZs
+Availablility : 99.99%, Durability: 99.999999999% (11 9s)
+
+Standard-IA (infrequntly access) : In-Frequetly accessed data.. But available immediatley..  Data Spread across >=3 AZs
+Availablility : 99.9%, Durability: 99.999999999% (11 9s)
+
+S3-OneZone IA : In-Frequetly accessed data.. But available immediatley..  Data Spread across 1 AZs
+Availablility : 99.5% , Durability: 99.999999999% (11 9s)
+
+S3 Gacier : Archive data for shorter durations.. Data will not be available immedialtly..
+We need to perform data retrival to get the data.. Retival takes Min-Hours..
+Availablility : 99.99% , Durability: 99.999999999% (11 9s) Data Spread across >=3 AZs
+
+S3 Glacier Deep Archieve : Archive data for longer durations.. Data will not be available immedialtly.. Retival Hours to Days..
+We need to perform data retrival to get the data.. 
+Availablility : 99.99% , Durability: 99.999999999% (11 9s) Data Spread across >=3 AZs
+
+S3-Intelligent tier : If we have unknown access patterns.. 
+Availablility : 99.9% , Durability: 99.999999999% (11 9s) Data Spread across >=3 AZs
+
+RRS : Reduced Redundancy Storage : Non-Critical data / easily reprodusable data.. 
+Availablility : 99.9% , Durability: 99.99%
+_____________________________________________________________________________________
+
+D: 18/11/2020
+
+
+If we don't have any . in bucket Names..
+https://bucketname.s3.regioncode.amazonaws.com/objectname
+https://bucketname.s3.amazonaws.com/objectname
+
+If we have . in bucket name..
+https://s3.regioncode.amazonaws.com/bucketname/objectname
+https://s3.regioncode.amazonaws.com/bucketname/foldername/objectname
+
+--> Public Access Settings : Block all Public Access
+
+--> If we want to make any object public, First edit the "Public ACcess Settings" in bucket. then make object Public. 
+
+
+Glacier Restoration:
+
+Bulk retrieval : Typically within 5-12 hours.
+Standard retrieval : Typically within 3-5 hours.
+Expedited retrieval : Typically within 1-5 minutes when retrieving less than 250 MB.
+
+
+
+Bucket Versioning : 
+___________________
+
+--> S3 keeps multiple copies of our files. 
+--> Most recent upload will be available if we don't enable Versioning.
+--> If we accidentally delete any object, We can get it back.
+--> We can track all changes happening on the file.
+
+Version: HIDE
+--> If shows only latest version of the object.
+--> If we delete the object, We will get the DELETE Marker.
+--> If we want to get the object back, Delete the "Delete Marker".
+
+Version: SHOW
+--> It shows all the versions of the object.
+--> If you delete any Obj Version, It deletes perminantly.
+
+
+LCR : Life Cycle Management RUle :
+__________________________________
+
+
+Multipart upload: FIle becomes as small chunks (parts) then all small parts upload to s3 then it combines.
+
+
+Join me on Slack â€“ itâ€™s a faster, simpler way to work. Sign up here, from any device: 
+https://join.slack.com/t/awswithavinash/shared_invite/zt-j6e1dsee-zYIONJVgfq3EqtQpYvDhRA
+
+
+________________________________________________________________________________________
+
+D: 23/11/2020
+
+Replication : DR
+	--> CRR (Cross Region Replication) : Replica copy stores in Another region
+	--> SRR (Same Region Replication) : Replica copy stores in another bucket in same 		region
+--> Versioning must be enabled.
+
+--> Before enabling Replication, Whetever data we have in SOurce, won;t replicate to destination.   (aws s3 sync Sourcebucket destination)
+
+
+
+Static website hosting: 
+--> S3 supports only static website hosting.
+--> Domain Name Should be same as Bucket Name.
+--> Index.html / Error.html
+
+http Status Codes : 
+2XX : OK / Success
+3XX : Redirection error
+4XX : Client Side Error	
+5XX : Server Side Error
+
+
+WinSCP / S3 Browser / Cyberduck / CLoudberry explorer..!!!
+aws s3 cp s3://bucketnme c:/newfolder --recursive
+
+_______________________________________________________________________________________
+
+D: 24/11/2020
+
+Tag: Combination of Key and Value. 
+Key  		: Value
+Name 		: Avinash
+Application 	: 
+Cost Center	: AAZAA
+
+Server access logging : ONly one bucket logging enabled. 
+
+CloudTrail : Logging service in AWS. 
+--> It will log everything we perform in AWS env. 
+--> Data Events, Can log all S3 platform logs. 
+
+
+Events : 
+--> SNS Notification : Demo
+--> SQS
+--> Lambda
+
+
+SNS : Simple Notification Service : 
+Create a Topic --> Add Subscribers 
+
+ARN : Amazon Resource Name : 
+
+
+Transfer acceleration : NO FREE TIER ELIGIBULITY
+https://s3-accelerate-speedtest.s3-accelerate.amazonaws.com/en/accelerate-speed-comparsion.html
+
+
+Requester pays : When enabled, the requester pays for requests and data transfer costs, and anonymous access to this bucket is disabled.
+
+Cloudwatch : Monitoring Service in AWS. We will get the Metrics (Graphical format). 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------
+21/11/2020
+
+Root User: If you are loging with email..: Highest permissions on AWs.
+IAM user: 
+
+IAM login url---
+https://557548783209.signin.aws.amazon.com/console
+https://chinnaws.signin.aws.amazon.com/console
+
+
+S3:Manage only s3 : IAM user
+EC2 : Manages EC2 : IAM user
+
+we use IAM credentials for S3 and EC2
+
+adding user:
+username: chinnaws
+Access Type:
+
+-------> AWS management console access : UN,PWD & sing-in...:Browser
+------->Programatic access : Access Key ID & secretAcessKey...:CLI / SDK / API    we use this in EC2
+
+
+Permissions : 
+		--> Create a Group, Add Permissons to Group --->Add user to group
+		-->Copy settings from another user
+		-->Allocate Permissions on IAM user Directly
+
+Policy : Document contains set of permissions on AWS.
+	-->AWS managed policy
+	-->AWS managed - Job Function Policy
+	--> Customer Managed Policy
+
+
+
+chinna:s3fullaccess :
+EC2user : ec2full access
+chinna1 : S3fullAccess
+ec2user1 : Chinnaws@4247 --ec2full access
+TL  : Multiple Sevices : AdministratorAccess Policy
+
+Enabel MFA on root Account :
+MultiFactorAuthenticaion : 
+--> VirtualMFA this used in mobile phones
+-->HW MFA -Device
+-->u2fkey / yuby key - 
+
+
+
+------------------------------------------------------------
+30-11-2020
+
+Hybrid cloud:
+
+
+EC2 : Elastic compute cloude : 
+
+Instance = Server / Box = VM (Virtual machine) = Azure VM = GCP Engine..
+ Instance are mainly 3 types
+1.On-Demand ec2 instances: Unpredictable workloads/usecases : Test your application with
+multiple configs..
+
+Pricing : /hr../sec ( Min of 60 seconds..you have to pay)
+
+
+Reserved Instance(RI) : Predictable workloads..Longterm runs in aws..We need to choose
+th config..
+Duration : 1yr / 3ys...
+
+	--> Stadard RI : We cannot change the config..
+	-->Convertable RI : We can change config(Upgrade only , there is no down grade)
+	-->Scheduled RI : For repeated Req/persistant req..(Ex..mon-fri , weekly 40hrs,)
+
+Pricing :
+	-->Full up front ; Pay 100% while purchasing..
+	-->Partial Upfront: Pay 30-50% now..AWs reduce the hourly price Pay for the
+    		reduced hourly price for actual usage in the month
+	--> No Upfront : pay everything monthly basis
+
+
+Hr : 1$/hr...:300 $ : 0.50%
+
+
+
+
+
+
+
+
+
+59 Sec = 1 minute
+1 min 10 sec 
+
+
+
+Tshirt size ==> how many IPs configured..!!: 
+
+
+Pay-as-you-go
+
+
+
+Server :--> Server rack, network rack, cooling, power connect..os, patches..application.. 
+
+
+4cpu, 16 gb ram, 1tb hdd...
+
+Task 1 : Launch a windows server 2016 instance, login with initial password, change the password.
+ Try to use the system password and verify it works or not..?
+
+
+task 2: Create a another user in server, provide remote desktop permissions and local admin
+permissions. try to connect as that newly created user.
+
+  output: 2 sessions should be active at a time.
+
+
+http://15.207.223.58/
+
+
+task: launch ec2 instance and install iis.
+
+
+
+
+
+
+
+
+
+
+----------------------------------
+14-12-2020
+EFS: Elastic file system: (we regularly called it as File share also)
+-->It works with NFS v4.1 Protocol (Network file system)
+-->EFS supports only LINUX OS.
+-->EFS Security Group must be opened with NFS port number.
+-->we can mount it to 100s/1000s of Instace also.
+-->whatever the data we haven't acceesed recently, we cane move it to IA
+ 
+
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-a4483a75.efs.ap-south-1.amazonaws.com:/ efsstorage
+
+fs-a4483a75.efs.ap-south-1.amazonaws.com:/ /home/ec2-user/efsstorage/efsstorage nfs4 rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=172.31.32.222,local_lock=none,addr=172.31.39.182 0 0
+
+fs-a4483a75.efs.ap-south-1.amazonaws.com:/ /home/ec2-user/efs nfs4 rw,relatime,v                                ers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,timeo=6                                00
+
+https://github.com/avizway1/aws-codepipeline-s3-codedeploy-linux
+
+http://phpapp-env.eba-mpziukyi.ap-south-1.elasticbeanstalk.com/
+
+
+EBS : Block : Dedicated for one ec2 instance
+EFS : Storage over the network
+
+Windows : FSx : No Free tier eligibility
+-->FSx is for windows OS
+-->It works with SMB Protocol..(Server messege Block Protocol)
+
+Elstic Beanstalk
+-->One org.. Developing an application..They Don't want to manage the Infra..Their
+focus is an application developement. what is the service we can use in aws..?
+
+--->Paas : Platform as a Service..
+--->OS level modifications not permited.
+--->One platform for one application only.
+
+Lightsail :
+-->Everything comes as a bundle.
+Cloud practitioner : one org need a website. They don't have any technical resources to
+manage the application /code / server / Infra..!!!!! Ans : Lightsail...
+
+
+Route53: AWS DNS Service
+
+what is DNS
+What is DNS record (A Record)
+What is hostedzone
+
+-------------------------------------------------------------------
+15-12-2020
+
+Placement Group : AWS places instances on the resource mechanism we selected.
+
+Low n/w latency, High n/w through .. TO sustain power failures / Nerwork resource failures
+
+-->Cluster Placement Group : all the instances are placing in same hard disk
+-->Partition Placement group :
+-->spread 
+
+-->Use same configuration instance for better performance.
+
+Q : can we Group the instances accross the regions..? 
+-------------------------------------------------------------------------------
+Systems Manager :
+
+task  install IIS using systems manager
+
+task2 : Recover a windows password using systems manager.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
